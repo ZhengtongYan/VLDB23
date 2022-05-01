@@ -271,11 +271,11 @@ def parse_transpilation_data(aggregate_results = False):
 # In[5]:
 
 
-#conduct_IBMQ_experiments(True, 1, sample_size = 1)
-#conduct_IBMQ_experiments(False, 1, sample_size = 20)
-#conduct_IBMQ_experiments(False, 2, sample_size = 20)
-#conduct_IBMQ_experiments(False, 3, sample_size = 20)
-#parse_transpilation_data()
-#conduct_IBMQ_QPU_experiments()
+conduct_IBMQ_experiments(True, 1, sample_size = 1)
+conduct_IBMQ_experiments(False, 1, sample_size = 20)
+conduct_IBMQ_experiments(False, 2, sample_size = 20)
+conduct_IBMQ_experiments(False, 3, sample_size = 20)
+parse_transpilation_data()
+conduct_IBMQ_QPU_experiments()
 parse_QPU_data()
 

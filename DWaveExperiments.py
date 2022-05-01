@@ -430,14 +430,12 @@ def parse_embedding_data(aggregate_data = False):
 
 if __name__ == '__main__':
     
-    #find_embeddings_for_increasing_relations(4, 20)
-    #find_embeddings_for_increasing_precision(27, 0)
-    #find_embeddings_for_increasing_precision(12, 2)
-    #find_embeddings_for_increasing_precision(7, 4)
-    #parse_embedding_data()
+    find_embeddings_for_increasing_relations(4, 20)
+    find_embeddings_for_increasing_precision(27, 0)
+    find_embeddings_for_increasing_precision(12, 2)
+    find_embeddings_for_increasing_precision(7, 4)
+    parse_embedding_data()
     
-    #preembed_problems_for_QPU_experiments()
-    #conduct_QPU_experiments()
-    #parse_QPU_data()
-    find_embeddings_for_increasing_relations(4, 5)
-
+    preembed_problems_for_QPU_experiments()
+    conduct_QPU_experiments()
+    parse_QPU_data()
