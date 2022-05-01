@@ -178,8 +178,7 @@ def preembed_problems_for_QPU_experiments(iterations=20):
                     # No embedding determined
                     continue
             if best_embedding is not None:
-                # TODO revert path test
-                save_to_path(best_embedding, 'test/' + problem_path + graph_type + '_query/' + str(i) + 'relations', 'best_embedding.txt')
+                save_to_path(best_embedding, problem_path + graph_type + '_query/' + str(i) + 'relations', 'best_embedding.txt')
 
 def conduct_QPU_experiments(num_reads=1000, samplesize=20):
     
@@ -191,9 +190,7 @@ def conduct_QPU_experiments(num_reads=1000, samplesize=20):
     annealing_times = [20, 60, 100]
     
     problem_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Problems/'
-    # TODO rever test
-    result_path = 'test/ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/'    
-    #result_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/'
+    result_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/'
     
     num_decimal_pos = 0
     
@@ -203,9 +200,7 @@ def conduct_QPU_experiments(num_reads=1000, samplesize=20):
         for graph_type in graph_types:   
             for i in range(3, 6):
                 card, pred, pred_sel, thres = load_problem_from_disc(problem_path + graph_type + '_query/' + str(i) + 'relations')
-                # TODO revert test
-                #best_embedding = format_loaded_embedding(load_from_path_pickle(problem_path + graph_type + '_query/' + str(i) + 'relations/best_embedding.txt'))
-                embedding = format_loaded_embedding(load_from_path('test/' + problem_path + graph_type + '_query/' + str(i) + 'relations/best_embedding.txt'))                
+                embedding = format_loaded_embedding(load_from_path(problem_path + graph_type + '_query/' + str(i) + 'relations/best_embedding.txt'))                
                 for j in range(samplesize):
                     bqm, weight_a = QUBOGenerator.generate_QUBO_for_DWave(card, thres, num_decimal_pos, pred, pred_sel)
                     embedded_sampler = embed_sampler(sampler, embedding)
@@ -218,9 +213,7 @@ def conduct_QPU_experiments(num_reads=1000, samplesize=20):
 
 def save_result(graph_type, num_relations, num_thres, num_decimal_pos, sample_index, embedding):
 
-    # todo revert
-    #path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
-    path_string = 'test/ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
+    path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
 
     datapath = os.path.abspath(path_string)
     pathlib.Path(datapath).mkdir(parents=True, exist_ok=True) 
@@ -256,16 +249,12 @@ def load_bqm(graph_type, num_relations, num_thres, num_decimal_pos, sample_index
     return bqm
 
 def embedding_exists(graph_type, num_relations, num_thres, num_decimal_pos):
-    # todo revert
-    #path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph'
-    path_string = 'test/ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph'
+    path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph'
     return os.path.isdir(path_string)
     
 def load_result(graph_type, num_relations, num_thres, num_decimal_pos, sample_index):
 
-    # todo revert
-    #path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
-    path_string = 'test/ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
+    path_string = 'ExperimentalAnalysis/DWave/Embeddings/Results/Data/' + str(num_relations) + '_relations/' + str(num_thres) + '_thres/' + str(num_decimal_pos) + '_decpos/' + str(graph_type) + '_graph/' + str(sample_index)
     
     datapath = os.path.abspath(path_string)
     pathlib.Path(datapath).mkdir(parents=True, exist_ok=True) 
@@ -360,9 +349,7 @@ def process_data(embedding_sizes):
     return minimum_size, mean_size, median_size, maximum_size
 
 def parse_QPU_data(aggregate_data = False):
-    # TODO revert test
-    #path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results'
-    path = 'test/ExperimentalAnalysis/DWave/QPUPerformance/Results'
+    path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results'
     annealing_times = [20, 60, 100]
     graph_types = ['CHAIN', 'STAR', 'CYCLE']
     for graph_type in graph_types:
@@ -375,9 +362,7 @@ def parse_QPU_data(aggregate_data = False):
                 for j in range(20):
                     problem_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Problems/' + graph_type + '_query/' + str(i) + 'relations'
                     card, pred, pred_sel, thres = load_problem_from_disc(problem_path)
-                    # TODO revert test
-                    #response_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/' + str(at) + '_AT/' + graph_type + '_query/' + str(i) + 'relations/' + str(j) + "/best_embedding_response.txt"
-                    response_path = 'test/ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/' + str(at) + '_AT/' + graph_type + '_query/' + str(i) + 'relations/' + str(j) + "/best_embedding_response.txt"                    
+                    response_path = 'ExperimentalAnalysis/DWave/QPUPerformance/Results/Data/' + str(at) + '_AT/' + graph_type + '_query/' + str(i) + 'relations/' + str(j) + "/best_embedding_response.txt"
                     response = load_from_path(response_path)
                     best_join_order, best_join_order_costs, valid_ratio, optimal_ratio = Postprocessing.postprocess_DWave_response(response, card, pred, pred_sel, thres, optimal_join_order_costs = 0)
                     if aggregate_data:
@@ -403,9 +388,7 @@ def parse_embedding_data(aggregate_data = False):
     graph_types = ["CHAIN", "STAR", "CYCLE"]
     decpos_values = [0, 2, 4]
     samplesize = 20
-    # todo revert
-    #path = 'ExperimentalAnalysis/DWave/Embeddings/Results'
-    path = 'test/ExperimentalAnalysis/DWave/Embeddings/Results'
+    path = 'ExperimentalAnalysis/DWave/Embeddings/Results'
     for i in range(4, 21):
         for j in range(1, 28):
             for decpos in decpos_values:
@@ -439,3 +422,4 @@ if __name__ == '__main__':
     preembed_problems_for_QPU_experiments()
     conduct_QPU_experiments()
     parse_QPU_data()
+

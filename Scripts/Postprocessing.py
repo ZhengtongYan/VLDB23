@@ -9,11 +9,6 @@ import numpy as np
 from math import prod
 import itertools
 
-import os
-import pathlib
-import pickle
-import json
-
 
 # In[2]:
 
@@ -150,59 +145,4 @@ def postprocess_DWave_response(response, card, pred, pred_sel, thres, optimal_jo
     optimal_ratio = opt_solution_counter / len(response)
         
     return best_join_order, best_join_order_costs, valid_ratio, optimal_ratio
-
-
-# In[3]:
-
-
-def load_from_path_pickle(problem_path):
-    data_file = os.path.abspath(problem_path)
-    if os.path.exists(data_file):
-        with open(data_file, 'rb') as file:
-            data = pickle.load(file)
-            return data
-
-def load_from_path(problem_path):
-    data_file = os.path.abspath(problem_path)
-    if os.path.exists(data_file):
-        with open(data_file) as file:
-            data = json.load(file)
-            return data
-        
-def format_loaded_pred(pred):
-    form_pred = []
-    for p in pred:
-        form_pred.append(tuple(p))
-    return form_pred
-        
-def load_problem_from_disc(problem_path):
-
-    card = load_from_path(problem_path + "/card.txt")      
-    pred = format_loaded_pred(load_from_path(problem_path + "/pred.txt"))    
-    pred_sel = load_from_path(problem_path + "/pred_sel.txt")
-    thres = load_from_path(problem_path + "/thres.txt")    
-    
-    return card, pred, pred_sel, thres
-
-def test_parsing():
-    annealing_times = [20, 60, 100]
-    graph_types = ['CHAIN', 'STAR', 'CYCLE']
-    for graph_type in graph_types:
-        for at in annealing_times:
-            for i in range(3, 6):
-                if graph_type == 'STAR' and i == 3:
-                    continue
-                valid_ratios = []
-                opt_ratios = []
-                for j in range(20):
-                    problem_path = 'Problems/' + graph_type + '_query/' + str(i) + 'relations'
-                    card, pred, pred_sel, thres = load_problem_from_disc(problem_path)
-                    response_path = 'Results/Data/' + str(at) + '_AT/' + graph_type + '_query/' + str(i) + 'relations/' + str(j) + "/best_embedding_response.txt"
-                    response = load_from_path(response_path)
-                    best_join_order, best_join_order_costs, valid_ratio, optimal_ratio = postprocess_DWave_response(response, card, pred, pred_sel, thres, optimal_join_order_costs = 0)
-                    valid_ratios.append(valid_ratio)
-                    opt_ratios.append(optimal_ratio)
-                mean_valid_occ = get_rounded_val(np.mean(valid_ratios)*1000, 2)
-                mean_opt_occ = get_rounded_val(np.mean(opt_ratios)*1000, 2)
-                print((at, graph_type, i, mean_valid_occ, mean_opt_occ))
 
