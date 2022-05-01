@@ -125,7 +125,6 @@ def get_IBMQ_QASM_backend():
     return quantum_instance
 
 def get_IBMQ_backend():
-    load_IBMQ_account()
     # The provider needs to enable access to the ibm_auckland, or a similar 27-qubit, QPU (this is not the case for the default "open" group)
     provider = IBMQ.get_provider(hub='ibm-q', group='open', project='main')
     backend = provider.get_backend('ibm_auckland')
